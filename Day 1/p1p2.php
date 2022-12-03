@@ -12,6 +12,8 @@
 		    }
 		}
 		rsort($sum);
-		echo $sum[0] + $sum[1] + $sum[2];
+		echo 'Top 1 > ' . $sum[0];
+		echo "<br/>";
+		echo 'Top 3 > ' . $sum[0] + $sum[1] + $sum[2];
 		fclose($file);
 	}
