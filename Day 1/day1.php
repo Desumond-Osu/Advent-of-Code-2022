@@ -1,18 +1,17 @@
 <?php
 	if ($file = fopen("input.txt", "r")) {
-		$top = 0;
+		$sum = [];
 		$value = 0;
 		while(!feof($file)) {
 		    $line = fgets($file);
 		    if (is_numeric($line)) {
 		    	$value += $line;
 		    } else {
-		    	if ($value > $top) {
-		    		$top = $value;
-		    	}
+		    	array_push($sum, $value);
 	    		$value = 0;
 		    }
 		}
-		echo $top;
+		rsort($sum);
+		echo $sum[0] + $sum[1] + $sum[2];
 		fclose($file);
 	}
