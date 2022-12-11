@@ -46,23 +46,14 @@
 			for ($k = 0; $k < count($monkey['item']); $k++) {
 				$count[$j]++;
 
-				switch ($monkey['op'][0]) {
-					case '*': $arr[$j]['item'][0] *= ($monkey['op'][1] != 'old') ? $monkey['op'][1] : $arr[$j]['item'][0]; break;
-					case '/': $arr[$j]['item'][0] /= ($monkey['op'][1] != 'old') ? $monkey['op'][1] : $arr[$j]['item'][0]; break;
-					case '+': $arr[$j]['item'][0] += ($monkey['op'][1] != 'old') ? $monkey['op'][1] : $arr[$j]['item'][0]; break;
-					case '-': $arr[$j]['item'][0] -= ($monkey['op'][1] != 'old') ? $monkey['op'][1] : $arr[$j]['item'][0]; break;
-				}
+				$arr[$j]['item'][0] = ($monkey['op'][1] != 'old') ? 
+				eval('return ' . $arr[$j]['item'][0] . $monkey['op'][0] . $monkey['op'][1] . ';') : 
+				eval('return ' . $arr[$j]['item'][0] . $monkey['op'][0] . $arr[$j]['item'][0] . ';');
 
 				$arr[$j]['item'][0] /= 3;
 				$arr[$j]['item'][0] = (int) floor($arr[$j]['item'][0]);
-				// echo var_export($arr[$j]['item']);
-				if ($arr[$j]['item'][0] % $monkey['test'] == 0) {
-					array_push($arr[$monkey['true']]['item'], $arr[$j]['item'][0]);
-					array_splice($arr[$j]['item'], 0, 1);
-				} else {
-					array_push($arr[$monkey['false']]['item'], $arr[$j]['item'][0]);
-					array_splice($arr[$j]['item'], 0, 1);
-				} 
+				array_push($arr[$monkey[$arr[$j]['item'][0] % $monkey['test'] == 0 ? 'true' : 'false']]['item'], $arr[$j]['item'][0]);
+				array_splice($arr[$j]['item'], 0, 1);
 			}
 		}
 	}

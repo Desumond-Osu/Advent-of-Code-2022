@@ -3,7 +3,6 @@
 
 	$i = 0;
 	$arr = [];
-	$totalMod = 1;
 	while(!feof($file)) {
 		$line = trim(fgets($file));
 
@@ -28,7 +27,6 @@
 
 		if (str_contains($line, 'Test')) { 
 			$arr[$i]['test'] = explode('by ', $line)[1];
-			$totalMod *= $arr[$i]['test'];
 		    continue;
 		}
 
@@ -41,6 +39,7 @@
 		$arr[$i]['count'] = 0;
 	}
 	
+	$totalMod = array_product(array_column($arr, 'test'));
 	$count = array_fill(0, count($arr), 0);
 	for ($round = 0; $round < 10000; $round++) {
 		for ($j = 0; $j < count($arr); $j++) {
